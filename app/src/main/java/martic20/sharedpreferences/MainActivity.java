@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences pref ;
+    private SharedPreferences pref;
     private EditText name;
     private EditText mail;
 
@@ -20,25 +20,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pref=getSharedPreferences("Dades",MODE_PRIVATE);
+        pref = getSharedPreferences("Dades", MODE_PRIVATE);
 
         Button submit = (Button) findViewById(R.id.submit);
-         name = (EditText) findViewById(R.id.namw);
-         mail = (EditText) findViewById(R.id.mail);
+        name = (EditText) findViewById(R.id.namw);
+        mail = (EditText) findViewById(R.id.mail);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString("name",name.getText().toString());
-                editor.putString("mail",mail.getText().toString());
+                if (name.getText().toString().length() > 0) {
+                    editor.putString("name", name.getText().toString());
+                }
+                if (mail.getText().toString().length() > 0) {
+                    editor.putString("mail", mail.getText().toString());
+                }
                 editor.commit();
-                startActivity(new Intent(MainActivity.this,Personal.class));
+                startActivity(new Intent(MainActivity.this, Personal.class));
             }
         });
 
 
     }
+
     @Override
     protected void onStop() {
         super.onStop();
